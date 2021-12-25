@@ -42,5 +42,13 @@ int main(){
 // 初始化屏幕
 void Initialization(void){
     initscr();
+    noecho();
+    cbreak();
+    timeout(speed);
+    keypad(speed);
+    keypad(stdscr,TRUE);
+    int offsetx = (COLS - WORLD_WIDTH) / 2;
+    int offsety = (LINES - WORLD_HEIGHT) / 2;
+    snakeys_world = newwin(WORLD_HEIGHT,WORLD_WIDTH,offsety,offsetx);
 }
 
