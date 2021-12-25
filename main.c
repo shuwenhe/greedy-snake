@@ -1,28 +1,46 @@
-#include <stdio.h>
+#include <ncurses.h>
+#include <stdlib.h>
+#include <time.h>
 
-typedef struct snake{
+typedef struct spart{
     int x; // 节点的x坐标
     int y; // 节点的y坐标
-    struct snake *next; // 蛇身的下一个节点
-}snake;
+}snakePart;
 
-int score = 0, add = 0; // 总得分与每次吃食物的得分
-int HightScore = 1000; // 最高分
-int status,sleepTime = 200; // 蛇前进状态，每次运行的时间间隔
-snake *head,*food; // 蛇头指针，食物指针
-snake *p; // 遍历蛇时用到的指针
-int endGamesStatus = 0;// 游戏结束的情况：撞到墙，咬到自己，主动退出游戏
+enum direction
+{
+    UP, // 蛇头向上移动
+    DOWN, // 蛇头向下移动
+    RIGHT,// 蛇头向右移动
+    LEFT// 蛇头向左移动
+};
+WINDOW *snakeys_world;// 定义贪吃蛇窗口
+int SnakeLength = 2;// 蛇的长度，初始化为1
+int Score = 0;// 成绩分数
+snakePart snake[120];// 设置蛇坐标-没用链表
+snakePart food; // 食物
+snakePart tem;
+int direction = UP; // 蛇的方向
+int ch;// 获取输入内容
+int speed = 600; // 
+
+// 初始化函数
+void Initialization(void); // 初始化函数
+void WaitGame(void);// 等待游戏
+void Game(void);// 游戏
+void GameOver(void);// 游戏结束
+void CreateSnake(void);// 创建蛇
+void RandomFood(void);// 随机食物
 
 int main(){
-    printf("hello\n");
-    printf("score = %d\n",score);
-    printf("add = %d\n",add);
-    printf("HightScore = %d\n",HightScore);
-    printf("head = %p\n",head);
-    printf("food = %p\n",food);
+    Initialization();
+    WaitGame();
+    Game();
+    return 0;
 }
 
-// 函数声明
-void gotoxy(int x,int y);// 设置光标位置
-int color(int c);// 更改文字颜色
-void printSnake; // // 字符画蛇
+// 初始化屏幕
+void Initialization(void){
+    initscr();
+}
+
