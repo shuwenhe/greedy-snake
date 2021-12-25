@@ -1,3 +1,2 @@
-# greedy-snake
-run
-gcc snake.c -o snake.out -lncurses
+gcc snake.c -o snack -lncurses 
+./snake 
